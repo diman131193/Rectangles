@@ -1,0 +1,31 @@
+﻿<Properties StartupConfiguration="{E5891BFD-0B11-19D5-8358-1D007006B97A}|">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/RectangleSpawner.cs">
+    <Files>
+      <File FileName="Assets/Scripts/RectangleSpawner.cs" Line="50" Column="47" />
+      <File FileName="Assets/Scripts/Node.cs" Line="159" Column="72" />
+      <File FileName="Assets/Scripts/Graph.cs" Line="140" Column="45" />
+      <File FileName="Assets/Scripts/GraphBuilder.cs" Line="44" Column="18" />
+      <File FileName="Assets/Scripts/Rectangle.cs" Line="121" Column="6" />
+    </Files>
+    <Pads>
+      <Pad Id="ProjectPad">
+        <State name="__root__">
+          <Node name="Rectangles" expanded="True">
+            <Node name="Assets" expanded="True">
+              <Node name="Scripts" expanded="True">
+                <Node name="RectangleSpawner.cs" selected="True" />
+              </Node>
+            </Node>
+          </Node>
+        </State>
+      </Pad>
+    </Pads>
+  </MonoDevelop.Ide.Workbench>
+  <MonoDevelop.Ide.DebuggingService.PinnedWatches />
+  <MonoDevelop.Ide.Workspace ActiveConfiguration="Debug" />
+  <MonoDevelop.Ide.ItemProperties.Assembly-CSharp PreferredExecutionTarget="f3d5366d-3fd4-4431-8512-632b018f7125" />
+  <MonoDevelop.Ide.DebuggingService.Breakpoints>
+    <BreakpointStore />
+  </MonoDevelop.Ide.DebuggingService.Breakpoints>
+  <MultiItemStartupConfigurations />
+</Properties>
