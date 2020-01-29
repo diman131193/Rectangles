@@ -62,6 +62,7 @@ public class Node
 
     /// <summary>
     /// Adds the given node as a neighbor for this node
+    /// and adds a line renderer
     /// </summary>
     /// <param name="neighbor">neighbor to add</param>
     public bool AddNeighbor(Node neighbor)
@@ -74,12 +75,18 @@ public class Node
         else
         {
             neighbors.Add(neighbor);
-            lineRenderers.Add(AddLineRenderer(value.transform.position, neighbor.Value.transform.position));
+            lineRenderers.Add(CreateLineRenderer(value.transform.position, neighbor.Value.transform.position));
             return true;
         }
     }
 
-    public GameObject AddLineRenderer(Vector3 position1, Vector3 position2)
+    /// <summary>
+    /// Create a line renderer
+    /// </summary>
+    /// <param name="position1">first position to create line</param>
+    /// <param name="position2">second position to create line</param>
+    /// <returns>line renderer</returns>
+    public GameObject CreateLineRenderer(Vector3 position1, Vector3 position2)
     {
         // add line renderer and draw line
         GameObject lineObj = new GameObject("LineObj");
@@ -106,6 +113,7 @@ public class Node
 
     /// <summary>
     /// Removes the given node as a neighbor for this node
+    /// and removes thr line renderer
     /// </summary>
     /// <param name="neighbor">neighbor to remove</param>
     /// <returns>true if the neighbor was removed, false otherwise</returns>
@@ -119,7 +127,7 @@ public class Node
         }
         else
         {
-            // remove neighbor
+            // remove neighbor and line renderer
             neighbors.RemoveAt(index);
             GameObject lineRenderer = lineRenderers[index];
             lineRenderers.RemoveAt(index);
@@ -130,6 +138,7 @@ public class Node
 
     /// <summary>
     /// Removes all the neighbors for the node
+    /// and removes all the line renderers
     /// </summary>
     /// <returns>true if the neighbors were removed, false otherwise</returns>
     public bool RemoveAllNeighbors()
@@ -144,6 +153,10 @@ public class Node
         return true;
     }
 
+    /// <summary>
+    /// Changes first position for all the line renderers
+    /// </summary>
+    /// <param name="position">new first line renderers position</param>
     public void SetLineRendererPosition0(Vector3 position)
     {
         for (int i = 0; i < neighbors.Count; i++)
@@ -153,6 +166,11 @@ public class Node
         }
     }
 
+    /// <summary>
+    /// Changes second position for the given line renderer
+    /// </summary>
+    /// <param name="position">new second line renderer position</param>
+    /// <param name="node">Node to change line renderer position</param>
     public void SetLineRendererPosition1(Vector3 position, Node node)
     {
         int index = neighbors.IndexOf(node);

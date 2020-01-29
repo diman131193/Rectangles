@@ -7,7 +7,7 @@ using UnityEngine;
 /// </summary>
 public class Rectangle : MonoBehaviour
 {
-    const float doubleClickTime = 0.5f;
+    const float DoubleClickTime = 0.5f;
     float lastClickTime;
 
     Vector3 mouseDownOffset;
@@ -19,12 +19,16 @@ public class Rectangle : MonoBehaviour
 
     private void Start()
     {
+        // save for efficiency
         boxCollider2D = GetComponent<BoxCollider2D>();
         colliderHalfWidth = boxCollider2D.size.x / 2;
         colliderHalfHeight = boxCollider2D.size.y / 2;
         rb2d = GetComponent<Rigidbody2D>();
     }
 
+    /// <summary>
+    /// Destroy the game object by double click
+    /// </summary>
     private void Update()
     {
         if (MousePointsToThisObject())
@@ -33,8 +37,9 @@ public class Rectangle : MonoBehaviour
             {
                 mouseDownOffset = transform.position - MouseToWorldPoint();
                 float timeSinceLastClick = Time.time - lastClickTime;
-                if (timeSinceLastClick < doubleClickTime)
+                if (timeSinceLastClick < DoubleClickTime)
                 {
+                    //Destroy the game object
                     GraphBuilder.Graph.RemoveNode(gameObject);
                     Destroy(gameObject);
                 }
@@ -47,7 +52,7 @@ public class Rectangle : MonoBehaviour
     {
         // store the offset between the mouse down position and the GameObject position
         mouseDownOffset = transform.position - MouseToWorldPoint();
-
+        //freez only rotation
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
@@ -63,11 +68,17 @@ public class Rectangle : MonoBehaviour
         ChangeLineRendererPosition(position);
     }
 
+    
     private void OnMouseUp()
     {
+        //freez all constraints
         rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
     }
-    
+
+    /// <summary>
+    /// Returns the mouse position as a world space position
+    /// </summary>
+    /// <returns>world mouse position</returns>
     Vector3 MouseToWorldPoint()
     {
         Vector3 position = Input.mousePosition;
@@ -76,6 +87,10 @@ public class Rectangle : MonoBehaviour
         return position;
     }
 
+    /// <summary>
+    /// Checks if the mouse points to this rectangle
+    /// </summary>
+    /// <returns>true if the mouse points to this rectangle, false otherwise</returns>
     bool MousePointsToThisObject()
     {
         Vector3 position = MouseToWorldPoint();
@@ -89,7 +104,7 @@ public class Rectangle : MonoBehaviour
     }
 
     /// <summary>
-    /// Calculates an x position to clamp the rectangle in the screen
+    /// Calculates a position to clamp the rectangle in the screen
     /// </summary>
     /// <param name="position">the position to clamp</param>
     /// <returns>the clamped position</returns>
@@ -116,6 +131,10 @@ public class Rectangle : MonoBehaviour
         return position;
     }
 
+    /// <summary>
+    /// Changes the line renderer position
+    /// </summary>
+    /// <param name="position">new line renderer position</param>
     void ChangeLineRendererPosition(Vector3 position)
     {
         Node node = GraphBuilder.Graph.Find(gameObject);
