@@ -1,12 +1,13 @@
 ﻿<Properties StartupConfiguration="{E5891BFD-0B11-19D5-8358-1D007006B97A}|">
-  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/RectangleSpawner.cs">
+  <MonoDevelop.Ide.Workbench ActiveDocument="Assets/Scripts/ScreenUtils.cs">
     <Files>
       <File FileName="Assets/Scripts/GameInitializer.cs" Line="1" Column="1" />
-      <File FileName="Assets/Scripts/Graph.cs" />
-      <File FileName="Assets/Scripts/GraphBuilder.cs" />
-      <File FileName="Assets/Scripts/Node.cs" />
-      <File FileName="Assets/Scripts/Rectangle.cs" />
+      <File FileName="Assets/Scripts/Graph.cs" Line="35" Column="6" />
+      <File FileName="Assets/Scripts/GraphBuilder.cs" Line="12" Column="26" />
+      <File FileName="Assets/Scripts/Node.cs" Line="1" Column="1" />
+      <File FileName="Assets/Scripts/Rectangle.cs" Line="74" Column="18" />
       <File FileName="Assets/Scripts/RectangleSpawner.cs" Line="25" Column="1" />
+      <File FileName="Assets/Scripts/ScreenUtils.cs" Line="1" Column="1" />
     </Files>
     <Pads>
       <Pad Id="ProjectPad">
@@ -14,7 +15,7 @@
           <Node name="Rectangles" expanded="True">
             <Node name="Assets" expanded="True">
               <Node name="Scripts" expanded="True">
-                <Node name="RectangleSpawner.cs" selected="True" />
+                <Node name="ScreenUtils.cs" selected="True" />
               </Node>
             </Node>
           </Node>

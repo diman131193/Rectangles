@@ -48,14 +48,6 @@ public class Node
         get { return neighbors.AsReadOnly(); }
     }
 
-    /// <summary>
-    /// Gets a read-only list of the lineRenderers of the node
-    /// </summary>
-    public IList<GameObject> LineRenderers
-    {
-        get { return lineRenderers.AsReadOnly(); }
-    }
-
     #endregion
 
     #region Methods
@@ -93,18 +85,18 @@ public class Node
         LineRenderer lineRenderer = lineObj.AddComponent<LineRenderer>();
         lineRenderer.material = new Material(Shader.Find("Hidden/Internal-Colored"));
 
-        //Set color
+        // set color
         lineRenderer.startColor = Color.black;
         lineRenderer.endColor = Color.black;
 
-        //Set width
+        // set width
         lineRenderer.startWidth = 0.05f;
         lineRenderer.endWidth = 0.05f;
 
-        //Set line count which is 2
+        // set line count
         lineRenderer.positionCount = 2;
 
-        //Set the postion of both two lines
+        // set the postion of both two lines
         lineRenderer.SetPosition(0, position1);
         lineRenderer.SetPosition(1, position2);
 
@@ -170,7 +162,7 @@ public class Node
     /// Changes second position for the given line renderer
     /// </summary>
     /// <param name="position">new second line renderer position</param>
-    /// <param name="node">Node to change line renderer position</param>
+    /// <param name="node">node to change line renderer position</param>
     public void SetLineRendererPosition1(Vector3 position, Node node)
     {
         int index = neighbors.IndexOf(node);

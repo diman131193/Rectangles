@@ -13,11 +13,14 @@ public class RectangleSpawner : MonoBehaviour
     float colliderHalfWidth;
     float colliderHalfHeight;
 
+    /// <summary>
+    /// Instantiates and destroys a temp rectangle to save
+    /// BoxCollider2D half sizes
+    /// </summary>
     void Start()
     {
         GameObject tempRectangle = Instantiate<GameObject>(prefabRectangle);
         BoxCollider2D boxCollider2D = tempRectangle.GetComponent<BoxCollider2D>();
-        // save for efficiency
         colliderHalfWidth = boxCollider2D.size.x / 2;
         colliderHalfHeight = boxCollider2D.size.y / 2;
         Destroy(tempRectangle);
@@ -37,17 +40,17 @@ public class RectangleSpawner : MonoBehaviour
     /// <returns>true if spawn area is free, false otherwise</returns>
     bool FreeArea()
     {
-        Vector3 position = MouseToWorldPoint();
-        Vector2 locationMin =
-            new Vector2(position.x - colliderHalfWidth, position.y - colliderHalfHeight);
-        Vector2 locationMax =
-            new Vector2(position.x + colliderHalfWidth, position.y + colliderHalfHeight);
+        Vector3 mouseWorldPosition = MouseToWorldPoint();
+        Vector2 lowerLeftCorner =
+            new Vector2(mouseWorldPosition.x - colliderHalfWidth, mouseWorldPosition.y - colliderHalfHeight);
+        Vector2 upperRightCorner =
+            new Vector2(mouseWorldPosition.x + colliderHalfWidth, mouseWorldPosition.y + colliderHalfHeight);
         if (
-            (Physics2D.OverlapArea(locationMin, locationMax) == null) &&
-            (locationMin.x > ScreenUtils.ScreenLeft) &&
-            (locationMin.y > ScreenUtils.ScreenBottom) &&
-            (locationMax.x < ScreenUtils.ScreenRight) &&
-            (locationMax.y < ScreenUtils.ScreenTop)
+            (Physics2D.OverlapArea(lowerLeftCorner, upperRightCorner) == null) &&
+            (lowerLeftCorner.x > ScreenUtils.ScreenLeft) &&
+            (lowerLeftCorner.y > ScreenUtils.ScreenBottom) &&
+            (upperRightCorner.x < ScreenUtils.ScreenRight) &&
+            (upperRightCorner.y < ScreenUtils.ScreenTop)
             ) return true;
         return false;
     }
@@ -57,9 +60,9 @@ public class RectangleSpawner : MonoBehaviour
     /// </summary>
     void Spawn()
     {
-        Vector3 position = MouseToWorldPoint();
+        Vector3 mouseWorldPosition = MouseToWorldPoint();
         GameObject rectangle =
-            Instantiate<GameObject>(prefabRectangle, position, Quaternion.identity);
+            Instantiate<GameObject>(prefabRectangle, mouseWorldPosition, Quaternion.identity);
         rectangle.GetComponent<SpriteRenderer>().color =
             new Color(
                 Random.Range(0.0f, 1.0f),
@@ -67,7 +70,7 @@ public class RectangleSpawner : MonoBehaviour
                 Random.Range(0.0f, 1.0f)
                 );
         // add the rectangle to the graph
-        GraphBuilder.Graph.AddNode(rectangle);
+        GraphInitializer.Graph.AddNode(rectangle);
     }
 
     /// <summary>
@@ -76,9 +79,9 @@ public class RectangleSpawner : MonoBehaviour
     /// <returns>world mouse position</returns>
     Vector3 MouseToWorldPoint()
     {
-        Vector3 position = Input.mousePosition;
-        position.z = -Camera.main.transform.position.z;
-        position = Camera.main.ScreenToWorldPoint(position);
-        return position;
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition.z = -Camera.main.transform.position.z;
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        return mouseWorldPosition;
     }
 }

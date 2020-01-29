@@ -17,9 +17,11 @@ public class Rectangle : MonoBehaviour
     BoxCollider2D boxCollider2D;
     Rigidbody2D rb2d;
 
+    /// <summary>
+    /// Saves BoxCollider2D half sizes and Rigidbody2D component
+    /// </summary>
     private void Start()
     {
-        // save for efficiency
         boxCollider2D = GetComponent<BoxCollider2D>();
         colliderHalfWidth = boxCollider2D.size.x / 2;
         colliderHalfHeight = boxCollider2D.size.y / 2;
@@ -39,8 +41,8 @@ public class Rectangle : MonoBehaviour
                 float timeSinceLastClick = Time.time - lastClickTime;
                 if (timeSinceLastClick < DoubleClickTime)
                 {
-                    //Destroy the game object
-                    GraphBuilder.Graph.RemoveNode(gameObject);
+                    // destroy the game object
+                    GraphInitializer.Graph.RemoveNode(gameObject);
                     Destroy(gameObject);
                 }
                 lastClickTime = Time.time;
@@ -52,26 +54,26 @@ public class Rectangle : MonoBehaviour
     {
         // store the offset between the mouse down position and the GameObject position
         mouseDownOffset = transform.position - MouseToWorldPoint();
-        //freez only rotation
+        // freeze only rotation
         rb2d.constraints = RigidbodyConstraints2D.FreezeRotation;
     }
 
     private void OnMouseDrag()
     {
         // move object with mouse
-        Vector3 position = mouseDownOffset + MouseToWorldPoint();
-        Vector2 position2d = new Vector2(position.x, position.y);
-        position2d = CalculateClamped(position2d);
-        rb2d.MovePosition(position2d);
-        position.x = position2d.x;
-        position.y = position2d.y;
-        ChangeLineRendererPosition(position);
+        Vector3 rectanglePosition = mouseDownOffset + MouseToWorldPoint();
+        Vector2 rectanglePosition2d = new Vector2(rectanglePosition.x, rectanglePosition.y);
+        rectanglePosition2d = CalculateClamped(rectanglePosition2d);
+        rb2d.MovePosition(rectanglePosition2d);
+        rectanglePosition.x = rectanglePosition2d.x;
+        rectanglePosition.y = rectanglePosition2d.y;
+        ChangeLineRendererPosition(rectanglePosition);
     }
 
     
     private void OnMouseUp()
     {
-        //freez all constraints
+        // freeze all constraints
         rb2d.constraints = RigidbodyConstraints2D.FreezeAll;
     }
 
@@ -81,10 +83,10 @@ public class Rectangle : MonoBehaviour
     /// <returns>world mouse position</returns>
     Vector3 MouseToWorldPoint()
     {
-        Vector3 position = Input.mousePosition;
-        position.z = -Camera.main.transform.position.z;
-        position = Camera.main.ScreenToWorldPoint(position);
-        return position;
+        Vector3 mousePosition = Input.mousePosition;
+        mousePosition.z = -Camera.main.transform.position.z;
+        Vector3 mouseWorldPosition = Camera.main.ScreenToWorldPoint(mousePosition);
+        return mouseWorldPosition;
     }
 
     /// <summary>
@@ -93,12 +95,12 @@ public class Rectangle : MonoBehaviour
     /// <returns>true if the mouse points to this rectangle, false otherwise</returns>
     bool MousePointsToThisObject()
     {
-        Vector3 position = MouseToWorldPoint();
+        Vector3 mouseWorldPosition = MouseToWorldPoint();
         if (
-            (position.x > transform.position.x - colliderHalfWidth) && (
-            position.x < transform.position.x + colliderHalfWidth) &&
-            (position.y > transform.position.y - colliderHalfHeight) &&
-            (position.y < transform.position.y + colliderHalfHeight)
+            (mouseWorldPosition.x > transform.position.x - colliderHalfWidth) && (
+            mouseWorldPosition.x < transform.position.x + colliderHalfWidth) &&
+            (mouseWorldPosition.y > transform.position.y - colliderHalfHeight) &&
+            (mouseWorldPosition.y < transform.position.y + colliderHalfHeight)
             ) return true;
         return false;
     }
@@ -106,29 +108,29 @@ public class Rectangle : MonoBehaviour
     /// <summary>
     /// Calculates a position to clamp the rectangle in the screen
     /// </summary>
-    /// <param name="position">the position to clamp</param>
+    /// <param name="rectanglePosition">the position to clamp</param>
     /// <returns>the clamped position</returns>
-    Vector2 CalculateClamped(Vector2 position)
+    Vector2 CalculateClamped(Vector2 rectanglePosition)
     {
         // clamp left and right edges
-        if (position.x - colliderHalfWidth < ScreenUtils.ScreenLeft)
+        if (rectanglePosition.x - colliderHalfWidth < ScreenUtils.ScreenLeft)
         {
-            position.x = ScreenUtils.ScreenLeft + colliderHalfWidth;
+            rectanglePosition.x = ScreenUtils.ScreenLeft + colliderHalfWidth;
         }
-        else if (position.x + colliderHalfWidth > ScreenUtils.ScreenRight)
+        else if (rectanglePosition.x + colliderHalfWidth > ScreenUtils.ScreenRight)
         {
-            position.x = ScreenUtils.ScreenRight - colliderHalfWidth;
+            rectanglePosition.x = ScreenUtils.ScreenRight - colliderHalfWidth;
         }
-        //clamp top and bottom edges
-        if (position.y - colliderHalfHeight < ScreenUtils.ScreenBottom)
+        // clamp top and bottom edges
+        if (rectanglePosition.y - colliderHalfHeight < ScreenUtils.ScreenBottom)
         {
-            position.y = ScreenUtils.ScreenBottom + colliderHalfHeight;
+            rectanglePosition.y = ScreenUtils.ScreenBottom + colliderHalfHeight;
         }
-        else if (position.y + colliderHalfHeight > ScreenUtils.ScreenTop)
+        else if (rectanglePosition.y + colliderHalfHeight > ScreenUtils.ScreenTop)
         {
-            position.y = ScreenUtils.ScreenTop - colliderHalfHeight;
+            rectanglePosition.y = ScreenUtils.ScreenTop - colliderHalfHeight;
         }
-        return position;
+        return rectanglePosition;
     }
 
     /// <summary>
@@ -137,7 +139,7 @@ public class Rectangle : MonoBehaviour
     /// <param name="position">new line renderer position</param>
     void ChangeLineRendererPosition(Vector3 position)
     {
-        Node node = GraphBuilder.Graph.Find(gameObject);
+        Node node = GraphInitializer.Graph.Find(gameObject);
         node.SetLineRendererPosition0(position);
     }
 }

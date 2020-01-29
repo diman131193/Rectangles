@@ -65,7 +65,7 @@
   <ItemGroup>
     <Compile Include="Assets\Scripts\GameInitializer.cs" />
     <Compile Include="Assets\Scripts\Graph.cs" />
-    <Compile Include="Assets\Scripts\GraphBuilder.cs" />
+    <Compile Include="Assets\Scripts\GraphInitializer.cs" />
     <Compile Include="Assets\Scripts\Node.cs" />
     <Compile Include="Assets\Scripts\Rectangle.cs" />
     <Compile Include="Assets\Scripts\RectangleSpawner.cs" />

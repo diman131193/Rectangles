@@ -13,57 +13,7 @@ public class Graph
 
     #endregion
 
-    #region Constructor
-
-    /// <summary>
-    /// Constructor
-    /// </summary>
-    public Graph()
-    {
-    }
-
-    #endregion
-
-    #region Properties
-
-    /// <summary>
-    /// Gets the number of nodes in the graph
-    /// </summary>
-    public int Count
-    {
-        get { return nodes.Count; }
-    }
-
-    /// <summary>
-    /// Gets a read-only list of the nodes in the graph
-    /// </summary>
-    public IList<Node> Nodes
-    {
-        get { return nodes.AsReadOnly(); }
-    }
-
-    #endregion
-
     #region Methods
-
-    /// <summary>
-    /// Clears all the nodes from the graph
-    /// </summary>
-    public void Clear()
-    {
-        // remove all the neighbors from each node
-        // so nodes can be garbage collected
-        foreach (Node node in nodes)
-        {
-            node.RemoveAllNeighbors();
-        }
-
-        // now remove all the nodes from the graph
-        for (int i = nodes.Count - 1; i >= 0; i--)
-        {
-            nodes.RemoveAt(i);
-        }
-    }
 
     /// <summary>
     /// Adds a node with the given value to the graph. If a node
